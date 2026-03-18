@@ -1,8 +1,9 @@
 import "./styles.css";
 import { lazy, Suspense, useState } from "react";
-import { Download, UserPlus } from "lucide-react";
+import { ArrowRight, Download, Users } from "lucide-react";
 import { Link } from "react-router-dom";
 import { COMMUNITY_CONFIG } from "@/config";
+
 const StatsSection = lazy(() => import("./StatsSection"));
 const NotificationPrompt = lazy(() =>
   import("@/components/ui/NotificationPrompt")
@@ -14,116 +15,78 @@ const Home = () => {
   const [loaded, setLoaded] = useState(false);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen w-full text-center bg-grid bg-base-100">
-      <section className="w-full max-w-screen-2xl mx-auto px-4 pt-5">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-y-10 md:gap-y-0 gap-x-12 items-center min-h-[84vh]">
-          {/* LEFT */}
-          <div className="flex flex-col justify-center gap-4 md:gap-6 text-left md:pr-8">
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold text-base-content leading-tight tracking-tight relative h-[55px] md:h-[65px] lg:h-[70px]">
-              <span className="absolute word-rotate whitespace-nowrap text-base-content">
-                <span>Trải nghiệm</span>
-                <span>Khám phá</span>
-                <span>Sáng tạo</span>
-                <span>Chia sẻ</span>
+    <div className="flex flex-col items-center justify-center min-h-screen w-full bg-base-100">
+      {/* Hero Section */}
+      <section className="w-full max-w-screen-xl mx-auto px-6 pt-8 pb-16">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center min-h-[80vh]">
+          {/* Left Content */}
+          <div className="flex flex-col justify-center gap-6 text-left order-2 lg:order-1">
+            <div className="flex items-center gap-2 mb-2">
+              <span className="px-3 py-1 text-xs font-medium tracking-wide uppercase bg-base-200 text-base-content/70 rounded-full">
+                Photo Sharing Reimagined
               </span>
+            </div>
+
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold text-base-content leading-[1.1] tracking-tight">
+              <span className="block">Capture.</span>
+              <span className="block">Share.</span>
+              <span className="block text-base-content/60">Connect.</span>
             </h1>
 
-            <h2 className="text-5xl inline-block no-select md:text-6xl lg:text-7xl font-extrabold leading-tight tracking-tight -mb-3">
-              <span className="no-select font-purrfect text-base-content">
-                Locket Camera
-              </span>
-            </h2>
-
-            <p className="text-base-content/90 text-base md:text-lg leading-relaxed">
-              Ghi lại khoảnh khắc, thêm caption cực chất và chia sẻ ngay tức thì
-              – tất cả chỉ với vài thao tác đơn giản trên <b>Locket Camera</b>.
-              Bạn có thể dùng trực tiếp trên trình duyệt hoặc thêm ứng dụng vào
-              màn hình chính để tiện lợi hơn.
+            <p className="text-base-content/70 text-lg lg:text-xl leading-relaxed max-w-lg">
+              Share moments with friends instantly. Add captions, send photos directly to their home screen widget. Simple, fast, personal.
             </p>
 
-            <p className="text-base-content/80 text-sm italic">
-              “Locket Dio” là dự án cá nhân, hoạt động độc lập. Không liên kết
-              với bên thứ ba nào trừ khi có thông báo chính thức từ Dio.
-            </p>
-
-            <p className="text-base-content/90 text-sm font-semibold space-y-1">
-              <span className="block">
-                ❗ Mọi giao dịch mua bán “quyền sử dụng” hay “truy cập web”
-                không do Dio ủy quyền đều là <b>gian lận</b>.
-              </span>
-              <span className="block">
-                • Nếu bạn phải trả phí để truy cập trang web này thì thì đó là
-                dấu hiệu của scam (lừa đảo).
-              </span>
-              <span className="block">
-                • Nếu phát hiện ai đó đang kinh doanh website này, vui lòng báo
-                cáo với{" "}
-                <Link to={"/contact"} className="underline">
-                  Quản trị viên
-                </Link>
-                .
-              </span>
-            </p>
-
-            <div className="flex flex-wrap gap-3 mt-2 animate-fade-in delay-400">
+            <div className="flex flex-col sm:flex-row gap-4 mt-4">
               <Link
-                to={"/login"}
-                className="
-                  px-5 py-3
-                  rounded-full
-                  font-semibold
-                  text-base-content
-                  bg-base-100/20
-                  border border-base-content/10
-                  backdrop-blur-[2px]
-                  shadow-sm
-                  transition-all duration-300
-                  hover:-translate-y-0.5
-                  hover:shadow-md
-                  hover:bg-base-100
-                  active:scale-95
-                "
+                to="/login"
+                className="group inline-flex items-center justify-center gap-2 px-8 py-4 text-base font-semibold bg-base-content text-base-100 rounded-xl transition-all duration-300 hover:opacity-90 hover:gap-3"
               >
-                Đăng nhập ngay
+                Get Started
+                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
               </Link>
 
               <Link
-                to={"/download"}
-                className="px-4 py-3 rotate-[1deg] gradient-effect text-white font-semibold rounded-full shadow-lg hover:bg-blue-700 transition-all duration-300 hover:scale-105"
+                to="/download"
+                className="inline-flex items-center justify-center gap-2 px-8 py-4 text-base font-semibold border-2 border-base-content/10 text-base-content rounded-xl transition-all duration-300 hover:bg-base-200"
               >
-                Thêm vào màn hình
+                <Download className="w-4 h-4" />
+                Install App
               </Link>
             </div>
+
+            <p className="text-base-content/50 text-sm mt-4">
+              Free to use. No ads. Your privacy protected.
+            </p>
           </div>
 
-          {/* RIGHT */}
-          <div className="flex items-center justify-center h-full w-full md:pl-6 no-select -mb-10">
-            <div className="relative transform hover:scale-105 transition-transform duration-500">
+          {/* Right - Phone Preview */}
+          <div className="flex items-center justify-center order-1 lg:order-2">
+            <div className="relative">
+              <div className="absolute -inset-4 bg-gradient-to-r from-base-200 to-base-300 rounded-3xl blur-2xl opacity-50"></div>
               <img
                 src="https://cdn.locket-dio.com/v1/images/double-phone-view-locketdio.webp"
-                alt="Locket Dio WebApp Preview"
+                alt="Locket App Preview"
                 loading="lazy"
                 onLoad={() => setLoaded(true)}
-                className={`
-            md:w-[380px] lg:w-[400px] h-auto object-contain 
-            drop-shadow-2xl transition-opacity duration-500 ease-in-out float-up-down
-            ${loaded ? "opacity-100" : "opacity-0"}
-          `}
+                className={`relative w-full max-w-[320px] lg:max-w-[400px] h-auto object-contain transition-all duration-700 ${
+                  loaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+                }`}
               />
             </div>
           </div>
         </div>
       </section>
 
-      <section className="w-full py-5">
-        <div className="mx-auto drop-shadow-lg">
-          <div className="text-center py-5">
-            <h2 className="text-4xl md:text-5xl font-bold text-base-content mb-4">
-              Tính năng nổi bật
+      {/* Features Section */}
+      <section className="w-full py-20 bg-base-200/50">
+        <div className="max-w-screen-xl mx-auto px-6">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl lg:text-4xl font-bold text-base-content mb-4">
+              Everything you need
             </h2>
-            <p className="text-lg md:text-xl text-base-content/80 mb-8 max-w-2xl mx-auto">
-              Khám phá những tính năng tuyệt vời giúp bạn tạo ra và chia sẻ
-              khoảnh khắc đáng nhớ.
+            <p className="text-lg text-base-content/60 max-w-2xl mx-auto">
+              Powerful features designed to make sharing moments effortless and meaningful.
             </p>
           </div>
           <Suspense fallback={null}>
@@ -132,50 +95,50 @@ const Home = () => {
         </div>
       </section>
 
+      {/* Steps Section */}
       <Suspense fallback={null}>
-        <StepsSection />{" "}
+        <StepsSection />
       </Suspense>
+
       {/* Stats Section */}
       <Suspense fallback={null}>
         <StatsSection />
       </Suspense>
 
       {/* CTA Section */}
-      <section className="py-6 px-4">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-base-content mb-6">
-            Bắt đầu hành trình sáng tạo
+      <section className="w-full py-24 bg-base-content text-base-100">
+        <div className="max-w-screen-xl mx-auto px-6 text-center">
+          <h2 className="text-3xl lg:text-5xl font-bold mb-6">
+            Ready to get started?
           </h2>
-          <p className="text-lg md:text-xl text-base-content/80 mb-8 max-w-2xl mx-auto">
-            Cài đặt hoặc thêm Locket Dio vào màn hình chính ngay hôm nay và khám
-            phá thế giới photography & videography đầy màu sắc!
+          <p className="text-lg lg:text-xl opacity-80 mb-10 max-w-2xl mx-auto">
+            Join thousands of users sharing moments with the people they love. Download now and start connecting.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
-              to={"/download"}
-              className="px-8 py-4 bg-gradient-to-r from-pink-500 to-purple-500 text-white font-bold rounded-3xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2"
+              to="/download"
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 text-base font-semibold bg-base-100 text-base-content rounded-xl transition-all duration-300 hover:opacity-90"
             >
               <Download className="w-5 h-5" />
-              Cài đặt miễn phí
+              Download Free
             </Link>
             <a
               href={COMMUNITY_CONFIG.discord}
               target="_blank"
-              className="px-8 py-4 bg-base-100/20 backdrop-blur-[2px] border-base-content/10 border text-base-content font-bold rounded-3xl transition-all duration-300 flex items-center justify-center gap-2"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 text-base font-semibold border-2 border-base-100/20 text-base-100 rounded-xl transition-all duration-300 hover:bg-base-100/10"
             >
-              <UserPlus className="w-5 h-5" />
-              Tham gia Discord
+              <Users className="w-5 h-5" />
+              Join Community
             </a>
-          </div>
-
-          <div className="mt-8 text-base-content/60 text-sm">
-            Dễ sử dụng • Không quảng cáo • Bảo mật thông tin
           </div>
         </div>
       </section>
 
-      {/* 👉 Component xin thông báo */}
-      <NotificationPrompt />
+      {/* Notification Prompt */}
+      <Suspense fallback={null}>
+        <NotificationPrompt />
+      </Suspense>
     </div>
   );
 };

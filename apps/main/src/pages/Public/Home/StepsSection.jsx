@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { ArrowRight, ArrowLeft, Lock, Camera, Type, Send } from "lucide-react";
 
 export default function StepsSection() {
   const [currentStep, setCurrentStep] = useState(0);
@@ -7,103 +8,89 @@ export default function StepsSection() {
   const steps = [
     {
       number: "01",
-      icon: "🔐",
-      title: "Đăng nhập",
-      description: "Đăng nhập bằng tài khoản Locket của bạn để bắt đầu sử dụng Locket Camera.",
-      color: "from-blue-500 to-cyan-500",
+      icon: Lock,
+      title: "Sign In",
+      description: "Log in with your Locket account to start using the camera features.",
     },
     {
       number: "02",
-      icon: "📸",
-      title: "Chụp hoặc quay",
-      description: "Mở camera ngay trên trình duyệt và ghi lại khoảnh khắc.",
-      color: "from-purple-500 to-pink-500",
+      icon: Camera,
+      title: "Capture",
+      description: "Open the camera directly in your browser and capture the moment.",
     },
     {
       number: "03",
-      icon: "✍️",
-      title: "Thêm caption",
-      description: "Viết caption độc đáo hoặc chọn các caption có sẵn để trang trí cho khoảnh khác của bạn.",
-      color: "from-pink-500 to-rose-500",
+      icon: Type,
+      title: "Add Caption",
+      description: "Write a unique caption or choose from pre-made options to personalize your moment.",
     },
     {
       number: "04",
-      icon: "🚀",
-      title: "Chia sẻ ngay",
-      description: "Đăng lên Locket hoặc lưu lại làm kỷ niệm.",
-      color: "from-green-500 to-emerald-500",
+      icon: Send,
+      title: "Share",
+      description: "Post to Locket or save it as a memory to cherish forever.",
     },
   ];
 
   return (
-    <section className="w-full py-12 px-4 sm:px-6 relative overflow-hidden">
-      {/* Background */}
-      <div className="absolute inset-0 opacity-10 pointer-events-none">
-        <div className="absolute top-10 left-10 w-32 h-32 bg-blue-500 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-10 right-10 w-40 h-40 bg-purple-500 rounded-full blur-3xl"></div>
-        <div className="absolute top-1/2 left-1/3 w-24 h-24 bg-pink-500 rounded-full blur-2xl"></div>
-      </div>
-
-      <div className="max-w-6xl mx-auto relative z-10">
+    <section className="w-full py-20 px-6">
+      <div className="max-w-screen-xl mx-auto">
         {/* Header */}
-        <div className="text-center mb-10 text-base-content max-w-3xl mx-auto">
-          <div className="inline-block px-5 py-2 bg-base-content-300 backdrop-blur-sm rounded-full shadow-sm mb-5">
-            <span className="text-sm font-semibold text-base-content/80">
-              Hướng dẫn sử dụng
-            </span>
-          </div>
-          <h2 className="text-4xl md:text-5xl font-extrabold leading-tight mb-4">
-            Cách sử dụng đơn giản
+        <div className="text-center mb-16 max-w-2xl mx-auto">
+          <span className="inline-block px-4 py-1.5 text-xs font-medium uppercase tracking-wider bg-base-200 text-base-content/70 rounded-full mb-4">
+            How it works
+          </span>
+          <h2 className="text-3xl lg:text-4xl font-bold text-base-content mb-4">
+            Simple as 1, 2, 3, 4
           </h2>
-          <p className="text-base md:text-lg text-base-content leading-relaxed">
-            Chỉ với 4 bước đơn giản, bạn có thể tạo và chia sẻ những khoảnh khắc
-            tuyệt vời.
+          <p className="text-lg text-base-content/60">
+            Create and share beautiful moments in just four easy steps.
           </p>
         </div>
 
         {/* Mobile: Manual navigation */}
         <div className="block lg:hidden">
-          <div className="relative bg-base-100/30 backdrop-blur-sm rounded-2xl p-5 shadow-lg text-left min-h-[260px] flex flex-col justify-between">
-            {/* Number square */}
-            <div
-              className={`absolute top-0 left-0 w-10 h-10 rounded-tl-2xl rounded-br-2xl bg-gradient-to-br ${steps[currentStep].color} flex items-center justify-center shadow-lg`}
-            >
-              <span className="text-white font-bold">
+          <div className="bg-base-200/50 rounded-2xl p-8">
+            <div className="flex items-center gap-3 mb-6">
+              <span className="text-sm font-bold text-base-content/40">
                 {steps[currentStep].number}
               </span>
+              <div className="flex-1 h-px bg-base-300"></div>
             </div>
 
-            {/* Icon */}
-            <div className="text-6xl mb-3 text-center animate-bounce">
-              {steps[currentStep].icon}
+            <div className="flex justify-center mb-6">
+              {(() => {
+                const Icon = steps[currentStep].icon;
+                return <Icon className="w-16 h-16 text-base-content" strokeWidth={1.5} />;
+              })()}
             </div>
-            {/* Title */}
-            <h3 className="text-xl font-semibold mb-1">
+
+            <h3 className="text-xl font-semibold text-base-content mb-3 text-center">
               {steps[currentStep].title}
             </h3>
-            {/* Description */}
-            <p className="text-gray-600 text-sm">
+            <p className="text-base-content/60 text-center">
               {steps[currentStep].description}
             </p>
 
-            {/* Navigation buttons */}
-            <div className="flex items-center justify-between mt-6">
+            {/* Navigation */}
+            <div className="flex items-center justify-between mt-8">
               <button
                 onClick={() => setCurrentStep((prev) => Math.max(prev - 1, 0))}
                 disabled={currentStep === 0}
-                className="btn btn-circle disabled:opacity-50 transition-colors"
-                aria-label="Quay lại"
+                className="p-3 rounded-xl border border-base-300 disabled:opacity-30 hover:bg-base-300 transition-colors"
+                aria-label="Previous"
               >
-                ←
+                <ArrowLeft className="w-5 h-5" />
               </button>
-              <div className="flex space-x-2">
+              <div className="flex gap-2">
                 {steps.map((_, i) => (
-                  <span
+                  <button
                     key={i}
-                    className={`w-3 h-3 rounded-full ${
-                      i === currentStep ? "bg-primary" : "bg-gray-400"
+                    onClick={() => setCurrentStep(i)}
+                    className={`w-2 h-2 rounded-full transition-colors ${
+                      i === currentStep ? "bg-base-content" : "bg-base-300"
                     }`}
-                  ></span>
+                  />
                 ))}
               </div>
               <button
@@ -111,65 +98,54 @@ export default function StepsSection() {
                   setCurrentStep((prev) => Math.min(prev + 1, steps.length - 1))
                 }
                 disabled={currentStep === steps.length - 1}
-                className="btn btn-circle disabled:opacity-50 transition-colors"
-                aria-label="Tiếp"
+                className="p-3 rounded-xl border border-base-300 disabled:opacity-30 hover:bg-base-300 transition-colors"
+                aria-label="Next"
               >
-                →
+                <ArrowRight className="w-5 h-5" />
               </button>
             </div>
           </div>
         </div>
 
-        {/* PC: Equal height grid */}
-        <div className="hidden lg:grid grid-cols-4 gap-6 mt-10 items-stretch">
-          {steps.map((step, index) => (
-            <div
-              key={index}
-              className="relative bg-base-100/30 backdrop-blur-sm rounded-2xl p-6 shadow-lg text-left flex flex-col min-h-[320px]"
-            >
-              {/* Number square */}
+        {/* Desktop: Grid */}
+        <div className="hidden lg:grid grid-cols-4 gap-6">
+          {steps.map((step, index) => {
+            const Icon = step.icon;
+            return (
               <div
-                className={`absolute top-0 left-0 w-10 h-10 rounded-tl-2xl rounded-br-2xl bg-gradient-to-br ${step.color} flex items-center justify-center shadow-lg`}
+                key={index}
+                className="bg-base-200/50 rounded-2xl p-8 hover:bg-base-200 transition-colors"
               >
-                <span className="text-white font-bold">{step.number}</span>
-              </div>
+                <div className="flex items-center gap-3 mb-6">
+                  <span className="text-sm font-bold text-base-content/40">
+                    {step.number}
+                  </span>
+                  <div className="flex-1 h-px bg-base-300"></div>
+                </div>
 
-              {/* Icon */}
-              <div className="text-7xl mb-5 mt-12 flex justify-center items-center">
-                {step.icon}
+                <div className="mb-6">
+                  <Icon className="w-12 h-12 text-base-content" strokeWidth={1.5} />
+                </div>
+
+                <h3 className="text-lg font-semibold text-base-content mb-2">
+                  {step.title}
+                </h3>
+                <p className="text-base-content/60 text-sm">
+                  {step.description}
+                </p>
               </div>
-              {/* Title */}
-              <h3 className="text-xl font-semibold mb-3 text-center">
-                {step.title}
-              </h3>
-              {/* Description */}
-              <p className="text-gray-600 text-sm flex-grow text-center">
-                {step.description}
-              </p>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
         {/* CTA */}
         <div className="text-center mt-12">
           <Link
-            to={"/login"}
-            className="inline-flex rotate-[3deg] bounce-subtle items-center px-5 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-full transform hover:scale-105 transition-all duration-300"
+            to="/login"
+            className="group inline-flex items-center gap-2 px-8 py-4 bg-base-content text-base-100 font-semibold rounded-xl hover:opacity-90 transition-all"
           >
-            Bắt đầu ngay
-            <svg
-              className="w-5 h-5 ml-2"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M13 7l5 5m0 0l-5 5m5-5H6"
-              />
-            </svg>
+            Get Started Now
+            <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
           </Link>
         </div>
       </div>

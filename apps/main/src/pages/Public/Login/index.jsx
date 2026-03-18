@@ -10,7 +10,7 @@ import RotatingCircleText from "./RotatingCircleText";
 import { ensureDBOwner } from "@/cache/configDB";
 import { useAuthStore } from "@/stores";
 import TurnstileCaptcha from "./TurnstileCaptcha";
-import { Mail, Phone } from "lucide-react";
+import { Mail, Phone, Eye, EyeOff, ArrowLeft } from "lucide-react";
 import { loginWithEmail, loginWithPhone } from "@/services";
 import { PhoneInput } from "./PhoneInput";
 
@@ -18,7 +18,7 @@ const Login = () => {
   const init = useAuthStore((s) => s.init);
   const hydrate = useAuthStore((s) => s.hydrate);
   const [captchaToken, setCaptchaToken] = useState(null);
-  const [loginMethod, setLoginMethod] = useState("email"); // "email" hoặc "phone"
+  const [loginMethod, setLoginMethod] = useState("email");
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -42,21 +42,20 @@ const Login = () => {
     e.preventDefault();
 
     if (CONFIG.keys.turnstileKey && !captchaToken) {
-      SonnerError("Vui lòng xác minh bạn không phải robot");
+      SonnerError("Please verify you're not a robot");
       return;
     }
 
-    // Validate
     if (loginMethod === "email") {
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailRegex.test(identifier)) {
-        SonnerError("Email không hợp lệ!");
+        SonnerError("Invalid email address");
         return;
       }
     } else {
       const phoneRegex = /^\+[1-9]\d{6,14}$/;
       if (!phoneRegex.test(identifier)) {
-        SonnerError("Số điện thoại không hợp lệ!");
+        SonnerError("Invalid phone number");
         return;
       }
     }
@@ -76,7 +75,7 @@ const Login = () => {
               captchaToken,
             });
 
-      if (!res?.data) throw new Error("Server không trả về dữ liệu");
+      if (!res?.data) throw new Error("Server did not return data");
 
       const { idToken, localId, refreshToken } = res.data;
 
@@ -84,8 +83,8 @@ const Login = () => {
       await ensureDBOwner(localId);
 
       SonnerSuccess(
-        "Đăng nhập thành công!",
-        `Xin chào ${res.data?.displayName || "người dùng"}!`
+        "Login successful!",
+        `Welcome back, ${res.data?.displayName || "User"}!`
       );
 
       init();
@@ -94,37 +93,30 @@ const Login = () => {
       if (error?.status) {
         switch (error.status) {
           case 400:
-            SonnerError("Tài khoản hoặc mật khẩu không đúng!");
+            SonnerError("Invalid email or password");
             break;
           case 401:
-            SonnerError("Phiên đăng nhập đã hết. Vui lòng đăng nhập lại!");
+            SonnerError("Session expired. Please login again");
             break;
           case 429:
-            SonnerError("Bạn nhập sai quá nhiều lần. Vui lòng thử lại sau!");
+            SonnerError("Too many attempts. Please try again later");
             break;
           case 403:
-            SonnerError("Bạn không có quyền truy cập.");
+            SonnerError("Access denied");
             window.location.href = "/login";
             break;
           case 500:
-            SonnerError("Lỗi hệ thống, vui lòng thử lại sau!");
+            SonnerError("Server error. Please try again later");
             break;
           default:
-            SonnerError(error.message || "Đăng nhập thất bại!");
+            SonnerError(error.message || "Login failed");
         }
       } else {
-        SonnerError("Lỗi kết nối! Vui lòng kiểm tra mạng.");
+        SonnerError("Connection error. Please check your network");
       }
-
-      // setIdentifier("");
-      // setPassword("");
     } finally {
       setIsLoginLoading(false);
     }
-  };
-
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
   };
 
   const toggleLoginMethod = () => {
@@ -139,175 +131,159 @@ const Login = () => {
     (CONFIG.keys.turnstileKey && !captchaToken);
 
   return (
-    <>
-      <div className="flex items-center justify-center h-[84vh] px-6">
-        <div className="relative w-full max-w-md p-6 shadow-lg overflow-hidden rounded-3xl backdrop-blur-3xl bg-base-100 border-base-300 text-base-content">
-          <RotatingCircleText />
-          <h1 className="text-3xl font-bold text-center mb-6">
-            Đăng Nhập Locket
-          </h1>
+    <div className="min-h-screen flex items-center justify-center px-6 py-12 bg-base-100">
+      <div className="w-full max-w-md">
+        {/* Back link */}
+        <Link
+          to="/"
+          className="inline-flex items-center gap-2 text-sm text-base-content/60 hover:text-base-content mb-8 transition-colors"
+        >
+          <ArrowLeft className="w-4 h-4" />
+          Back to home
+        </Link>
 
-          <form onSubmit={handleLogin} className="space-y-4">
-            {/* Input Email hoặc SĐT */}
-            <div className="space-y-1">
-              <label className="label flex gap-1 items-center">
-                {loginMethod === "email" ? "Email" : "Số điện thoại"}
-                <span className="text-red-500">*</span>
+        {/* Login Card */}
+        <div className="bg-base-100 border border-base-300 rounded-2xl p-8 shadow-sm">
+          <div className="relative mb-8">
+            <RotatingCircleText />
+            <div className="text-center">
+              <h1 className="text-2xl font-bold text-base-content mb-2">
+                Welcome back
+              </h1>
+              <p className="text-base-content/60 text-sm">
+                Sign in to continue to your account
+              </p>
+            </div>
+          </div>
+
+          <form onSubmit={handleLogin} className="space-y-5">
+            {/* Email/Phone Input */}
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-base-content">
+                {loginMethod === "email" ? "Email" : "Phone Number"}
               </label>
               <div className="relative">
                 {loginMethod === "email" ? (
                   <input
-                    type={"email"}
+                    type="email"
                     value={identifier}
                     onChange={(e) => setIdentifier(e.target.value)}
-                    placeholder={"example@email.com"}
+                    placeholder="you@example.com"
                     required
-                    className="w-full py-5 rounded-lg input input-ghost border border-base-content transition text-base font-semibold placeholder:font-normal placeholder:italic placeholder:opacity-70"
+                    className="w-full px-4 py-3 bg-base-200 border border-base-300 rounded-xl text-base-content placeholder:text-base-content/40 focus:outline-none focus:ring-2 focus:ring-base-content/20 transition-all"
                   />
                 ) : (
                   <PhoneInput phone={identifier} onChange={setIdentifier} />
                 )}
               </div>
-              <div className="flex justify-end">
-                <button
-                  type="button"
-                  onClick={toggleLoginMethod}
-                  className="text-xs text-base-content opacity-80 hover:opacity-100 underline inline-flex items-center gap-1"
-                >
-                  {loginMethod === "email" ? (
-                    <>
-                      <Phone className="w-4 h-4" />
-                      Đăng nhập bằng số điện thoại?
-                    </>
-                  ) : (
-                    <>
-                      <Mail className="w-4 h-4" />
-                      Đăng nhập bằng email?
-                    </>
-                  )}
-                </button>
-              </div>
+              <button
+                type="button"
+                onClick={toggleLoginMethod}
+                className="text-xs text-base-content/60 hover:text-base-content flex items-center gap-1 transition-colors"
+              >
+                {loginMethod === "email" ? (
+                  <>
+                    <Phone className="w-3 h-3" />
+                    Use phone number instead
+                  </>
+                ) : (
+                  <>
+                    <Mail className="w-3 h-3" />
+                    Use email instead
+                  </>
+                )}
+              </button>
             </div>
 
-            {/* Input Mật khẩu */}
-            <div className="space-y-1">
-              <label className="label flex gap-1 items-center">
-                Mật khẩu
-                <span className="text-red-500">*</span>
-              </label>
+            {/* Password Input */}
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <label className="text-sm font-medium text-base-content">
+                  Password
+                </label>
+                <Link
+                  to="/forgot-password"
+                  className="text-xs text-base-content/60 hover:text-base-content transition-colors"
+                >
+                  Forgot password?
+                </Link>
+              </div>
               <div className="relative">
                 <input
                   type={showPassword ? "text" : "password"}
-                  className="w-full pr-5 rounded-lg input input-ghost border-base-content font-semibold text-base placeholder:font-normal placeholder:italic placeholder:opacity-70"
-                  placeholder="Nhập mật khẩu"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Enter your password"
                   required
+                  className="w-full px-4 py-3 pr-12 bg-base-200 border border-base-300 rounded-xl text-base-content placeholder:text-base-content/40 focus:outline-none focus:ring-2 focus:ring-base-content/20 transition-all"
                 />
                 <button
                   type="button"
-                  onClick={togglePasswordVisibility}
-                  className="absolute top-1/2 z-10 right-3 transform -translate-y-1/2 text-base-content opacity-70 hover:opacity-100 transition-opacity"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-base-content/40 hover:text-base-content transition-colors"
                 >
                   {showPassword ? (
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth={1.5}
-                      stroke="currentColor"
-                      className="w-5 h-5"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M3.98 8.223A10.477 10.477 0 001.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.45 10.45 0 0112 4.5c4.756 0 8.773 3.162 10.065 7.498a10.523 10.523 0 01-4.293 5.774M6.228 6.228L3 3m3.228 3.228l3.65 3.65m7.894 7.894L21 21m-3.228-3.228l-3.65-3.65m0 0a3 3 0 11-4.243-4.243m4.242 4.242L9.88 9.88"
-                      />
-                    </svg>
+                    <EyeOff className="w-5 h-5" />
                   ) : (
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth={1.5}
-                      stroke="currentColor"
-                      className="w-5 h-5"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.639 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.639 0-8.573-3.007-9.963-7.178z"
-                      />
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                      />
-                    </svg>
+                    <Eye className="w-5 h-5" />
                   )}
                 </button>
               </div>
-              <div className="flex justify-end">
-                <Link
-                  to="/forgot-password"
-                  className="text-xs tracking-wide opacity-80 hover:opacity-100 underline"
-                >
-                  Quên mật khẩu?
-                </Link>
-              </div>
             </div>
 
-            {/* Remember me & Forgot password */}
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <input
-                  id="rememberMe"
-                  type="checkbox"
-                  disabled
-                  className="checkbox checkbox-primary checkbox-sm"
-                  checked={rememberMe}
-                  onChange={() => setRememberMe(!rememberMe)}
-                />
-                <label
-                  htmlFor="rememberMe"
-                  className="cursor-pointer select-none text-sm"
-                >
-                  Ghi nhớ đăng nhập
-                </label>
-              </div>
+            {/* Remember Me */}
+            <div className="flex items-center gap-2">
+              <input
+                id="rememberMe"
+                type="checkbox"
+                checked={rememberMe}
+                onChange={() => setRememberMe(!rememberMe)}
+                className="w-4 h-4 rounded border-base-300 text-base-content focus:ring-base-content/20"
+              />
+              <label
+                htmlFor="rememberMe"
+                className="text-sm text-base-content/70 cursor-pointer select-none"
+              >
+                Remember me
+              </label>
             </div>
 
-            {/* Button đăng nhập */}
+            {/* Submit Button */}
             <button
               type="submit"
-              className={`
-                w-full btn btn-primary py-3 text-lg font-semibold rounded-lg transition flex items-center justify-center gap-2
-                ${
-                  isActiveLogin
-                    ? "bg-blue-400 cursor-not-allowed opacity-80"
-                    : ""
-                }
-              `}
               disabled={isActiveLogin}
+              className={`w-full py-3.5 px-4 bg-base-content text-base-100 font-semibold rounded-xl transition-all duration-200 flex items-center justify-center gap-2 ${
+                isActiveLogin
+                  ? "opacity-50 cursor-not-allowed"
+                  : "hover:opacity-90 active:scale-[0.98]"
+              }`}
             >
               {isLoginLoading ? (
                 <>
-                  <LoadingRing size={20} stroke={3} speed={2} color="white" />
-                  Đang đăng nhập...
+                  <LoadingRing size={20} stroke={3} speed={2} color="currentColor" />
+                  Signing in...
                 </>
               ) : (
-                "Đăng Nhập"
+                "Sign In"
               )}
             </button>
 
             <TurnstileCaptcha onVerify={setCaptchaToken} />
 
-            <span className="text-xs">Vui lòng chờ Server02 khởi động.</span>
-            <StatusServer />
+            {/* Server Status */}
+            <div className="pt-4 border-t border-base-300">
+              <p className="text-xs text-base-content/50 mb-2">Server Status</p>
+              <StatusServer />
+            </div>
           </form>
         </div>
+
+        {/* Footer */}
+        <p className="text-center text-xs text-base-content/50 mt-6">
+          By signing in, you agree to our Terms of Service and Privacy Policy.
+        </p>
       </div>
-    </>
+    </div>
   );
 };
 

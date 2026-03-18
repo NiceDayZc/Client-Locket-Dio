@@ -4,26 +4,22 @@ const statsData = [
   {
     value: 10000,
     display: "10K+",
-    label: "Người dùng hoạt động",
-    color: "from-blue-400 to-cyan-400",
+    label: "Active Users",
   },
   {
     value: 1.7,
     display: "1.7M+",
-    label: "Ảnh & Video đã tạo",
-    color: "from-purple-400 to-pink-400",
+    label: "Photos & Videos Created",
   },
   {
     value: 30,
     display: "30GB+",
-    label: "Dung lượng sử dụng mỗi ngày",
-    color: "from-green-400 to-emerald-400",
+    label: "Daily Data Usage",
   },
   {
     value: 4.8,
-    display: "4.8/5★",
-    label: "Đánh giá trung bình",
-    color: "from-yellow-400 to-orange-400",
+    display: "4.8/5",
+    label: "Average Rating",
   },
 ];
 
@@ -63,8 +59,8 @@ const AnimatedNumber = ({ value, display }) => {
         ? `${Math.round(count / 1000)}K+`
         : display.includes("GB")
         ? `${Math.round(count)}GB+`
-        : display.includes("★")
-        ? `${count.toFixed(1)}/5★`
+        : display.includes("/5")
+        ? `${count.toFixed(1)}/5`
         : display.includes("M")
         ? `${count.toFixed(1)}M+`
         : Math.round(count)}
@@ -74,26 +70,24 @@ const AnimatedNumber = ({ value, display }) => {
 
 const StatsSection = () => {
   return (
-    <section className="pb-10 px-4">
-      <div className="max-w-6xl mx-auto">
+    <section className="w-full py-20 bg-base-200/50">
+      <div className="max-w-screen-xl mx-auto px-6">
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-base-content mb-4">
-            Thống kê về Locket Camera
+          <h2 className="text-3xl lg:text-4xl font-bold text-base-content mb-4">
+            Trusted by thousands
           </h2>
+          <p className="text-lg text-base-content/60">
+            Join our growing community of users sharing moments every day.
+          </p>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
           {statsData.map((stat, index) => (
-            <div key={index} className="text-center group">
-              <div
-                className={`text-3xl md:text-4xl lg:text-5xl font-bold bg-gradient-to-r ${stat.color} bg-clip-text text-transparent mb-2 transition-transform duration-300 group-hover:scale-110`}
-              >
-                <AnimatedNumber
-                  value={stat.value}
-                  display={stat.display}
-                />
+            <div key={index} className="text-center">
+              <div className="text-4xl lg:text-5xl font-bold text-base-content mb-2">
+                <AnimatedNumber value={stat.value} display={stat.display} />
               </div>
-              <p className="text-base-content/80 text-sm md:text-base font-medium">
+              <p className="text-base-content/60 text-sm font-medium">
                 {stat.label}
               </p>
             </div>

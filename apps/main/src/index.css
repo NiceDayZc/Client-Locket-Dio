@@ -1,60 +1,42 @@
 @import "../tailwind.css";
 
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-  /* color-scheme: light dark; */
-  color: rgba(255, 255, 255, 0.87);
-  /* background-color: #242424; */
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /* --theme-color: #ffffff: */
-}
-.no-save {
-  pointer-events: none; /* Ngăn mọi tương tác chuột */
-  -webkit-user-drag: none; /* Chrome, Edge, Opera */
-}
-.no-select {
-  user-select: none; /* Chặn chọn chữ trên tất cả trình duyệt */
-  -webkit-user-select: none; /* Safari */
-  -moz-user-select: none; /* Firefox */
-  -ms-user-select: none; /* IE/Edge */
-  pointer-events: none; /* Ngăn mọi tương tác chuột */
-  -webkit-user-drag: none; /* Chrome, Edge, Opera */
-}
-.disable-select {
-  user-select: none; /* Chặn chọn chữ trên tất cả trình duyệt */
-  -webkit-user-select: none; /* Safari */
-  -moz-user-select: none; /* Firefox */
-  -ms-user-select: none; /* IE/Edge */
-  pointer-events: none; /* Ngăn mọi tương tác chuột */
-  -webkit-user-drag: none; /* Chrome, Edge, Opera */
-}
-@keyframes gradientMove {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
 }
 
+/* Utility classes */
+.no-save {
+  pointer-events: none;
+  -webkit-user-drag: none;
+}
+
+.no-select,
+.disable-select {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  pointer-events: none;
+  -webkit-user-drag: none;
+}
+
+/* Premium gradient background */
 .bg-locket {
-  background: linear-gradient(180deg, #000000 0%, #1a1a1a 50%, #000000 100%);
-  background-size: 200% 200%;
-  /* animation: gradientMove 5s ease infinite; */
+  background: linear-gradient(180deg, #000000 0%, #0a0a0a 50%, #000000 100%);
   color: white;
 }
 
+/* Brand fonts */
 .font-lovehouse {
-  font-family: "LoveHouse", system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: "LoveHouse", system-ui, sans-serif;
 }
+
 @font-face {
   font-family: "LoveHouse";
   src: url("https://cdn.locket-dio.com/v1/fonts/LoveHouse.woff") format("woff2");
@@ -64,22 +46,18 @@
 }
 
 .font-purrfect {
-  font-family: "Purrfect", system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: "Purrfect", system-ui, sans-serif;
 }
+
 @font-face {
-  font-family: 'Purrfect';
-  src: url("https://cdn.locket-dio.com/v1/fonts/Purrfect.woff2") format('woff2');
+  font-family: "Purrfect";
+  src: url("https://cdn.locket-dio.com/v1/fonts/Purrfect.woff2") format("woff2");
   font-weight: normal;
   font-style: normal;
   font-display: swap;
 }
 
-/* Class để dùng font này */
-/* .sf-compact-rounded-regular {
-  font-family: 'SF Compact Rounded Black', sans-serif;
-} */
-
-/* Animation send new moments */
+/* Animation utilities */
 @layer utilities {
   .animate-slide-up {
     animation: slide-up 0.5s forwards;
@@ -96,7 +74,7 @@
     }
     100% {
       opacity: 0;
-      transform: scale(1) translateY(-100vh); /* Đẩy lên khỏi màn hình */
+      transform: scale(1) translateY(-100vh);
     }
   }
 
@@ -123,45 +101,24 @@
   }
 }
 
-/* InputForMoment.css */
-
+/* Shake animation */
 @keyframes custom-shake {
-  0% {
-    transform: translate(0, 0) rotate(0deg) scale(1);
-  }
-  10% {
-    transform: translate(-2px, -1px) rotate(-1deg) scale(1.05);
-  }
-  20% {
-    transform: translate(2px, 1px) rotate(1deg) scale(0.97);
-  }
-  30% {
-    transform: translate(-1px, 2px) rotate(-1.5deg) scale(1.03);
-  }
-  40% {
-    transform: translate(1px, -2px) rotate(1.5deg) scale(0.95);
-  }
-  50% {
-    transform: translate(-2px, 1px) rotate(-1deg) scale(1.1);
-  }
-  60% {
-    transform: translate(2px, -1px) rotate(1deg) scale(0.95);
-  }
-  70% {
-    transform: translate(-1px, -2px) rotate(-1.5deg) scale(1.03);
-  }
-  80% {
-    transform: translate(1px, 2px) rotate(1.5deg) scale(0.97);
-  }
-  90% {
-    transform: translate(-2px, 0) rotate(-1deg) scale(1.05);
-  }
+  0%,
   100% {
     transform: translate(0, 0) rotate(0deg) scale(1);
+  }
+  25% {
+    transform: translate(-2px, -1px) rotate(-1deg) scale(1.02);
+  }
+  50% {
+    transform: translate(2px, 1px) rotate(1deg) scale(0.98);
+  }
+  75% {
+    transform: translate(-1px, 1px) rotate(-0.5deg) scale(1.01);
   }
 }
 
 .shake {
-  animation: custom-shake 0.8s infinite;
+  animation: custom-shake 0.6s ease-in-out infinite;
   transform-origin: center;
 }

@@ -1,40 +1,39 @@
-import "./header.css";
 import { Menu } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useApp } from "@/context/AppContext";
 
 const Header = () => {
   const { navigation } = useApp();
-
   const { setIsSidebarOpen } = navigation;
 
   return (
-    <>
-      <header className="sticky top-0 z-50 shadow-md bg-base-100 navbar flex items-center justify-between px-6 py-3 text-base-content border-base-300">
-        <Link to="/" className="flex items-center gap-2" aria-label="Trang chủ">
-          <span className="font-semibold gradient-text disable-select">
-            Locket Dio
-          </span>
+    <header className="sticky top-0 z-50 bg-base-100/80 backdrop-blur-lg border-b border-base-300">
+      <div className="max-w-screen-xl mx-auto px-6 py-4 flex items-center justify-between">
+        <Link
+          to="/"
+          className="flex items-center gap-2"
+          aria-label="Home"
+        >
           <img
             src="/images/locket-dio.png"
-            alt="Locket icon"
-            className="w-7 h-7 object-contain -ml-1 disable-select"
+            alt="Locket"
+            className="w-8 h-8 object-contain"
             draggable="false"
           />
+          <span className="font-bold text-xl text-base-content tracking-tight">
+            Locket
+          </span>
         </Link>
 
-        <div className="flex items-center gap-2">
-          {/* <ThemeDropdown /> */}
-          <button
-            onClick={() => setIsSidebarOpen(true)}
-            className="p-2 rounded-md transition cursor-pointer btn"
-            aria-label="Mở menu"
-          >
-            <Menu size={28} strokeWidth={2} />
-          </button>
-        </div>
-      </header>
-    </>
+        <button
+          onClick={() => setIsSidebarOpen(true)}
+          className="p-2.5 rounded-xl hover:bg-base-200 transition-colors"
+          aria-label="Open menu"
+        >
+          <Menu size={24} className="text-base-content" />
+        </button>
+      </div>
+    </header>
   );
 };
 

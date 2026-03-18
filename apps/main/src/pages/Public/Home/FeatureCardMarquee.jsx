@@ -1,102 +1,68 @@
 import Marquee from "react-fast-marquee";
-import { Camera, Type, Share2, AppWindow, Bell, Calendar } from "lucide-react";
+import { Camera, Type, Share2, Smartphone, Bell, Calendar } from "lucide-react";
 
 const FEATURES = [
   {
-    icon: <Camera className="w-7 h-7" />,
-    title: "Chụp & Quay video",
+    icon: Camera,
+    title: "Capture Moments",
     description:
-      "Ghi lại khoảnh khắc trực tiếp ngay trên trình duyệt một cách dễ dàng và nhanh chóng, không cần cài đặt ứng dụng phức tạp.",
-    gradientFrom: "from-blue-500/10",
-    gradientTo: "to-blue-600/10",
-    iconFrom: "from-blue-500",
-    iconTo: "to-blue-600",
+      "Record photos and videos directly in your browser. No complex app installation required.",
   },
   {
-    icon: <Type className="w-7 h-7" />,
-    title: "Caption sáng tạo",
+    icon: Type,
+    title: "Creative Captions",
     description:
-      "Thêm caption cá nhân hóa đầy cảm xúc và phong cách độc đáo. Tạo dấu ấn riêng biệt với mỗi khoảnh khắc đáng nhớ của bạn.",
-    gradientFrom: "from-purple-500/10",
-    gradientTo: "to-purple-600/10",
-    iconFrom: "from-purple-500",
-    iconTo: "to-purple-600",
+      "Add personalized captions with emotion and unique style. Make each moment truly yours.",
   },
   {
-    icon: <Share2 className="w-7 h-7" />,
-    title: "Chia sẻ dễ dàng",
+    icon: Share2,
+    title: "Instant Sharing",
     description:
-      "Chia sẻ khoảnh khắc tức thì với bạn bè chỉ bằng một cú click đơn giản, không cần tải về hay qua nhiều bước phức tạp.",
-    gradientFrom: "from-pink-500/10",
-    gradientTo: "to-pink-600/10",
-    iconFrom: "from-pink-500",
-    iconTo: "to-pink-600",
+      "Share moments with friends instantly with a single tap. No downloads, no complicated steps.",
   },
   {
-    icon: <AppWindow className="w-7 h-7" />,
-    title: "WebApp tiện lợi",
+    icon: Smartphone,
+    title: "WebApp Ready",
     description:
-      "Truy cập mọi tính năng trực tiếp từ trình duyệt như một ứng dụng cài đặt, hỗ trợ PWA để hoạt động mượt mà ngay cả khi offline.",
-    gradientFrom: "from-green-500/10",
-    gradientTo: "to-green-600/10",
-    iconFrom: "from-green-500",
-    iconTo: "to-green-600",
+      "Access all features directly from your browser. PWA support for smooth offline experience.",
   },
   {
-    icon: <Bell className="w-7 h-7" />,
-    title: "Thông báo thông minh",
+    icon: Bell,
+    title: "Smart Notifications",
     description:
-      "Thông báo khi có moment mới hoặc khi bạn cần biết, tính năng mới, celebrity mới.",
-    gradientFrom: "from-orange-500/10",
-    gradientTo: "to-orange-600/10",
-    iconFrom: "from-orange-500",
-    iconTo: "to-orange-600",
+      "Get notified when there's a new moment or important update. Never miss what matters.",
   },
   {
-    icon: <Calendar className="w-7 h-7" />,
-    title: "Xem lại moment",
+    icon: Calendar,
+    title: "Moment History",
     description:
-      "Dễ dàng xem lại và sắp xếp những moment đã gửi trước đây, không bỏ lỡ kỷ niệm nào.",
-    gradientFrom: "from-cyan-500/10",
-    gradientTo: "to-cyan-600/10",
-    iconFrom: "from-cyan-500",
-    iconTo: "to-cyan-600",
+      "Easily browse and organize your past moments. Every memory preserved and accessible.",
   },
 ];
 
 const FeatureCardMarquee = () => {
   return (
     <div className="relative overflow-hidden">
-      <Marquee
-        speed={30}
-        gradient={true}
-        gradientColor={[248, 251, 253]}
-        gradientWidth={200}
-      >
-        {FEATURES.map((feature, idx) => (
-          <div
-            key={idx}
-            className={`
-              relative 
-              p-4 rounded-3xl
-              mx-3 bg-base-100/20 backdrop-blur-[2px]
-              w-[280px] h-[240px]
-              flex-shrink-0 flex flex-col
-            `}
-          >
+      <Marquee speed={30} gradient={false}>
+        {FEATURES.map((feature, idx) => {
+          const Icon = feature.icon;
+          return (
             <div
-              className={`w-12 h-12 bg-gradient-to-br ${feature.iconFrom} ${feature.iconTo} rounded-2xl flex items-center drop-shadow-md justify-center mb-4`}
+              key={idx}
+              className="relative p-6 rounded-2xl mx-3 bg-base-100 border border-base-300 w-[280px] h-[200px] flex-shrink-0 flex flex-col"
             >
-              <span className="text-xl text-white">{feature.icon}</span>
+              <div className="w-12 h-12 bg-base-200 rounded-xl flex items-center justify-center mb-4">
+                <Icon className="w-6 h-6 text-base-content" />
+              </div>
+              <h3 className="text-base font-semibold text-base-content mb-2">
+                {feature.title}
+              </h3>
+              <p className="text-sm text-base-content/60 leading-relaxed line-clamp-3">
+                {feature.description}
+              </p>
             </div>
-            <h3 className="text-lg text-left font-bold text-text-base-content mb-2 leading-tight">
-              {feature.title}
-            </h3>
-            <p className="text-sm text-text-base-content text-left leading-relaxed line-clamp-6 flex-1">
-              {feature.description}
-            </p>
-          </div>
-        ))}
+          );
+        })}
       </Marquee>
     </div>
   );

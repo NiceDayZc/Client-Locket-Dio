@@ -1,32 +1,16 @@
-/* styles.css */
+/* Gradient text - minimalist */
 .gradient-text {
-  font-family: "LoveHouse", sans-serif;
-  font-size: 1.8rem;
-  background: linear-gradient(45deg, #000000, #333333, #000000, #1a1a1a);
+  font-family: "Inter", system-ui, sans-serif;
+  font-size: 1.5rem;
+  background: linear-gradient(135deg, #000000 0%, #333333 100%);
   background-clip: text;
+  -webkit-background-clip: text;
   color: transparent;
-  font-weight: bold;
-  background-size: 400% 400%;
-  animation: gradient 3s ease infinite;
-  margin-bottom: -7px;
+  font-weight: 700;
 }
 
 [data-theme="dark"] .gradient-text {
-  background: linear-gradient(45deg, #ffffff, #cccccc, #ffffff, #e5e5e5);
+  background: linear-gradient(135deg, #ffffff 0%, #cccccc 100%);
   background-clip: text;
-  color: transparent;
-  background-size: 400% 400%;
-  animation: gradient 3s ease infinite;
-}
-
-@keyframes gradient {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
+  -webkit-background-clip: text;
 }

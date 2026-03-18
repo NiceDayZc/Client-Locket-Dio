@@ -1,3 +1,4 @@
+/* Word rotation animation */
 @keyframes text-rotate {
   0% {
     opacity: 0;
@@ -39,160 +40,128 @@
 .word-rotate span:nth-child(4) {
   animation-delay: 7.5s;
 }
+
+/* Float animation */
 @keyframes float-up-down {
-  0% {
+  0%,
+  100% {
     transform: translateY(0);
   }
   50% {
-    transform: translateY(-10px); /* Độ nâng lên */
-  }
-  100% {
-    transform: translateY(0);
+    transform: translateY(-12px);
   }
 }
 
 .float-up-down {
-  animation: float-up-down 2s ease-in-out infinite;
+  animation: float-up-down 3s ease-in-out infinite;
 }
-/* Wave Effect CSS */
+
+/* Gradient text - minimalist */
 .gradient-text-v2 {
   display: inline-block;
-  font-family: "LoveHouse", sans-serif;
-  background: linear-gradient(
-    45deg,
-    #000000,
-    #333333,
-    #666666,
-    #333333,
-    #000000
-  );
-  background-size: 300% 300%;
+  font-family: "Inter", system-ui, sans-serif;
+  background: linear-gradient(135deg, #000000 0%, #333333 50%, #000000 100%);
+  background-size: 200% 200%;
   background-clip: text;
   -webkit-background-clip: text;
   color: transparent;
   -webkit-text-fill-color: transparent;
-  animation: gradientMove 5s ease-in-out infinite,
-    letterWave 2s ease-in-out infinite;
+  animation: gradientShift 4s ease-in-out infinite;
 }
 
 [data-theme="dark"] .gradient-text-v2 {
-  background: linear-gradient(
-    45deg,
-    #ffffff,
-    #cccccc,
-    #999999,
-    #cccccc,
-    #ffffff
-  );
-  background-size: 300% 300%;
+  background: linear-gradient(135deg, #ffffff 0%, #cccccc 50%, #ffffff 100%);
+  background-size: 200% 200%;
   background-clip: text;
   -webkit-background-clip: text;
 }
 
-@keyframes gradientMove {
-  0% {
+@keyframes gradientShift {
+  0%,
+  100% {
     background-position: 0% 50%;
   }
   50% {
     background-position: 100% 50%;
   }
-  100% {
-    background-position: 0% 50%;
-  }
 }
 
-@keyframes letterWave {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-15px);
-  }
+/* Subtle glow effect */
+.animate-glow {
+  animation: subtleGlow 3s ease-in-out infinite;
 }
 
-@keyframes glowPulse {
+@keyframes subtleGlow {
   0%,
   100% {
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
   }
   50% {
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.2);
   }
 }
 
 [data-theme="dark"] .animate-glow {
-  animation: glowPulseDark 2s ease-in-out infinite;
+  animation: subtleGlowDark 3s ease-in-out infinite;
 }
 
-@keyframes glowPulseDark {
+@keyframes subtleGlowDark {
   0%,
   100% {
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.05);
   }
   50% {
-    box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+    box-shadow: 0 0 40px rgba(255, 255, 255, 0.1);
   }
 }
 
-.animate-glow {
-  animation: glowPulse 2s ease-in-out infinite;
+/* Shake animation */
+.shake-x {
+  animation: shakeX 1s ease-in-out infinite;
 }
+
 @keyframes shakeX {
   0%,
   100% {
     transform: translateX(0);
   }
   25% {
-    transform: translateX(-4px);
-  }
-  50% {
-    transform: translateX(4px);
+    transform: translateX(-3px);
   }
   75% {
-    transform: translateX(-2px);
+    transform: translateX(3px);
   }
 }
 
-.shake-x {
-  animation: shakeX 1s ease-in-out infinite;
+/* Subtle bounce */
+.bounce-subtle {
+  animation: pulseBounce 2.5s ease-in-out infinite;
 }
+
 @keyframes pulseBounce {
   0%,
   100% {
     transform: scale(1) translateY(0);
   }
   50% {
-    transform: scale(1.05) translateY(-2px);
+    transform: scale(1.02) translateY(-2px);
   }
 }
 
-.bounce-subtle {
-  animation: pulseBounce 2s ease-in-out infinite;
-}
-
-/* .bg-grid {
-  background-image:
-    linear-gradient(rgba(255,255,255,0.2) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.2) 1px, transparent 1px),
-    linear-gradient(to right, #3b82f6, #8b5cf6);
-  background-size: 40px 40px, 40px 40px, 100% 100%;
-  background-position: 0 20px, 20px 0, center;
-  background-color: #111;
-} */
-
-
+/* Grid background - minimalist */
 .bg-grid {
-  background-image:
-    linear-gradient(rgba(0, 0, 0, 0.08) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 0, 0, 0.08) 1px, transparent 1px);
-  background-size: 40px 40px, 40px 40px, 100% 100%;
-  background-position: 0 25px, 20px 0, center;
+  background-image: linear-gradient(
+      rgba(0, 0, 0, 0.03) 1px,
+      transparent 1px
+    ),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
 }
 
 [data-theme="dark"] .bg-grid {
-  background-image:
-    linear-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+  background-image: linear-gradient(
+      rgba(255, 255, 255, 0.03) 1px,
+      transparent 1px
+    ),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
 }
-
