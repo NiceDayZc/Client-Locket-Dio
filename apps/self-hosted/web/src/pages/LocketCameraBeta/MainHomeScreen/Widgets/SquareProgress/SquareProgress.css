@@ -3,13 +3,13 @@
 }
 
 .square-progress .path-bg {
-  stroke: #444;
+  stroke: #e5e5e5;
   stroke-width: 10;
   fill: none;
 }
 
 .square-progress .path-progress {
-  stroke: #00ccff;
+  stroke: #000000;
   stroke-width: 10;
   fill: none;
   stroke-linecap: round;
@@ -17,6 +17,14 @@
   stroke-dashoffset: 800;
   animation: pathProgress 5s linear forwards;
   animation-play-state: paused;
+}
+
+[data-theme="dark"] .square-progress .path-bg {
+  stroke: #333333;
+}
+
+[data-theme="dark"] .square-progress .path-progress {
+  stroke: #ffffff;
 }
 
 @keyframes pathProgress {

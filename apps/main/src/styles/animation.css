@@ -1,7 +1,12 @@
 .gradient-effect {
-  background: linear-gradient(120deg, #ff6432 25%, #ff0065 45%, #7b2eff 75%) 50%
+  background: linear-gradient(120deg, #000000 25%, #333333 45%, #1a1a1a 75%) 50%
     100% / 200% no-repeat;
   animation: gradient-effect 2s linear infinite alternate;
+}
+
+[data-theme="dark"] .gradient-effect {
+  background: linear-gradient(120deg, #ffffff 25%, #cccccc 45%, #e5e5e5 75%) 50%
+    100% / 200% no-repeat;
 }
 
 @keyframes gradient-effect {
@@ -115,13 +120,19 @@
 }
 
 .animated-gradient {
-  background: linear-gradient(270deg, #9333ea, #ec4899, #9333ea);
+  background: linear-gradient(270deg, #000000, #333333, #000000);
   background-size: 400% 400%;
   color: white;
   animation: gradientFlow 6s ease infinite;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 12px rgba(236, 72, 153, 0.3);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   border-radius: 9999px; /* full rounded */
+}
+
+[data-theme="dark"] .animated-gradient {
+  background: linear-gradient(270deg, #ffffff, #cccccc, #ffffff);
+  color: black;
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.2);
 }
 
 @keyframes gradientFlow {

@@ -2,7 +2,7 @@
 .gradient-text {
   font-family: "LoveHouse", sans-serif;
   font-size: 1.8rem;
-  background: linear-gradient(45deg, #ff0000, #1a53ff, #ea01ff, #fcfc00);
+  background: linear-gradient(45deg, #000000, #333333, #000000, #1a1a1a);
   background-clip: text;
   color: transparent;
   font-weight: bold;
@@ -10,6 +10,15 @@
   animation: gradient 3s ease infinite;
   margin-bottom: -7px;
 }
+
+[data-theme="dark"] .gradient-text {
+  background: linear-gradient(45deg, #ffffff, #cccccc, #ffffff, #e5e5e5);
+  background-clip: text;
+  color: transparent;
+  background-size: 400% 400%;
+  animation: gradient 3s ease infinite;
+}
+
 @keyframes gradient {
   0% {
     background-position: 0% 50%;
